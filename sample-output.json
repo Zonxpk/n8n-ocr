@@ -1,0 +1,158 @@
+[
+  {
+    "id": "doc_001",
+    "document_type": "receipt",
+    "merchant": "Big C Supermarket",
+    "invoice_number": "000123456789",
+    "date": "2026-01-10",
+    "items": [
+      {
+        "name": "Milk 1L",
+        "quantity": 2,
+        "unit_price": 45.00,
+        "total": 90.00
+      },
+      {
+        "name": "Bread Loaf",
+        "quantity": 1,
+        "unit_price": 29.00,
+        "total": 29.00
+      },
+      {
+        "name": "Eggs (10pcs)",
+        "quantity": 1,
+        "unit_price": 65.00,
+        "total": 65.00
+      },
+      {
+        "name": "Banana (per kg)",
+        "quantity": 1.5,
+        "unit_price": 20.00,
+        "total": 30.00
+      }
+    ],
+    "subtotal": 214.00,
+    "tax_rate": 0.07,
+    "tax_amount": 14.98,
+    "grand_total": 228.98,
+    "payment_method": "CARD",
+    "validation_status": "passed",
+    "validation_details": {
+      "subtotal_check": "214.00 = 214.00 ✓",
+      "tax_check": "214.00 * 0.07 = 14.98 ✓",
+      "total_check": "214.00 + 14.98 = 228.98 ✓"
+    },
+    "processed_at": "2026-01-11T08:30:00Z"
+  },
+  {
+    "id": "doc_002",
+    "document_type": "invoice",
+    "merchant": "ABC Corporate Services",
+    "invoice_number": "INV-2026-00854",
+    "date": "2026-01-08",
+    "items": [
+      {
+        "name": "Web Development Services",
+        "quantity": 40,
+        "unit_price": 2500.00,
+        "total": 100000.00
+      },
+      {
+        "name": "Hosting & Support (3 months)",
+        "quantity": 1,
+        "unit_price": 15000.00,
+        "total": 15000.00
+      },
+      {
+        "name": "Domain Registration",
+        "quantity": 1,
+        "unit_price": 500.00,
+        "total": 500.00
+      }
+    ],
+    "subtotal": 115500.00,
+    "tax_rate": 0.07,
+    "tax_amount": 8085.00,
+    "grand_total": 123585.00,
+    "payment_method": "BANK_TRANSFER",
+    "validation_status": "passed",
+    "validation_details": {
+      "subtotal_check": "115500.00 = 115500.00 ✓",
+      "tax_check": "115500.00 * 0.07 = 8085.00 ✓",
+      "total_check": "115500.00 + 8085.00 = 123585.00 ✓"
+    },
+    "processed_at": "2026-01-11T09:15:00Z"
+  },
+  {
+    "id": "doc_003",
+    "document_type": "receipt",
+    "merchant": "Starbucks Coffee",
+    "invoice_number": "TXN-2026-445821",
+    "date": "2026-01-11",
+    "items": [
+      {
+        "name": "Tall Cappuccino",
+        "quantity": 2,
+        "unit_price": 140.00,
+        "total": 280.00
+      },
+      {
+        "name": "Blueberry Muffin",
+        "quantity": 1,
+        "unit_price": 95.00,
+        "total": 95.00
+      }
+    ],
+    "subtotal": 375.00,
+    "tax_rate": 0.07,
+    "tax_amount": 26.25,
+    "grand_total": 401.25,
+    "payment_method": "CARD",
+    "validation_status": "passed",
+    "validation_details": {
+      "subtotal_check": "375.00 = 375.00 ✓",
+      "tax_check": "375.00 * 0.07 = 26.25 ✓",
+      "total_check": "375.00 + 26.25 = 401.25 ✓"
+    },
+    "processed_at": "2026-01-11T10:45:00Z"
+  },
+  {
+    "id": "doc_004",
+    "document_type": "receipt",
+    "merchant": "Tesco Lotus",
+    "invoice_number": "TXID-9876543",
+    "date": "2026-01-09",
+    "items": [
+      {
+        "name": "Notebook (A4, 100 sheets)",
+        "quantity": 3,
+        "unit_price": 35.00,
+        "total": 105.00
+      },
+      {
+        "name": "Ballpoint Pen Set",
+        "quantity": 2,
+        "unit_price": 25.00,
+        "total": 50.00
+      },
+      {
+        "name": "USB Cable 2m",
+        "quantity": 1,
+        "unit_price": 199.00,
+        "total": 199.00
+      }
+    ],
+    "subtotal": 354.00,
+    "tax_rate": 0.07,
+    "tax_amount": 24.78,
+    "grand_total": 378.78,
+    "payment_method": "CASH",
+    "validation_status": "passed",
+    "validation_details": {
+      "subtotal_check": "354.00 = 354.00 ✓",
+      "tax_check": "354.00 * 0.07 = 24.78 ✓",
+      "total_check": "354.00 + 24.78 = 378.78 ✓"
+    },
+    "processed_at": "2026-01-11T07:20:00Z"
+  }
+]

@@ -1,0 +1,156 @@
+{
+  "name": "OCR to JSON Workflow",
+  "description": "Convert PDF/image documents (receipts, invoices) to structured JSON with AI validation",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "upload",
+        "responseMode": "responseNode"
+      },
+      "id": "webhook_upload",
+      "name": "Webhook Upload",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/vision/ocr",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "requestBody": "{\n  \"model\": \"gpt-4-vision\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": [\n        {\n          \"type\": \"image_url\",\n          \"image_url\": {\n            \"url\": \"{{ $json.file_url }}\"\n          }\n        },\n        {\n          \"type\": \"text\",\n          \"text\": \"Extract all text from this document. Return raw text only.\"\n        }\n      ]\n    }\n  ]\n}"
+      },
+      "id": "ocr_extraction",
+      "name": "OCR Extraction",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "prompt": "Parse the following OCR text from a receipt/invoice and extract structured data.\nReturn ONLY valid JSON in this format:\n{\n  \"document_type\": \"receipt|invoice|bill\",\n  \"merchant\": \"string\",\n  \"invoice_number\": \"string\",\n  \"date\": \"YYYY-MM-DD\",\n  \"items\": [\n    {\"name\": \"string\", \"quantity\": number, \"unit_price\": number, \"total\": number}\n  ],\n  \"subtotal\": number,\n  \"tax_rate\": number,\n  \"tax_amount\": number,\n  \"grand_total\": number,\n  \"payment_method\": \"string\"\n}\n\nOCR Text:\n{{ $json.choices[0].message.content }}\n\nNormalize dates and numbers. Return ONLY JSON.",
+        "model": "gpt-4",
+        "temperature": 0.3,
+        "maxTokens": 1000
+      },
+      "id": "ai_parser",
+      "name": "AI Parser",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 3,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "jsonData": "=JSON.parse($json.choices[0].message.content)"
+      },
+      "id": "parse_json",
+      "name": "Parse JSON Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "jsonData": "={\n  \"valid\": true,\n  \"errors\": [],\n  \"document\": $json\n}"
+      },
+      "id": "validate_calculation",
+      "name": "Validate Calculations",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [1050, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://your-database.example.com/api/documents",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "requestBody": "{{ $json }}"
+      },
+      "id": "save_to_database",
+      "name": "Save to Database",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1250, 300]
+    },
+    {
+      "parameters": {
+        "jsonData": "={\n  \"status\": \"success\",\n  \"extracted_data\": $json,\n  \"validation\": \"passed\"\n}"
+      },
+      "id": "success_response",
+      "name": "Success Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1450, 300]
+    }
+  ],
+  "connections": {
+    "webhook_upload": {
+      "main": [
+        [
+          {
+            "node": "ocr_extraction",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ocr_extraction": {
+      "main": [
+        [
+          {
+            "node": "ai_parser",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ai_parser": {
+      "main": [
+        [
+          {
+            "node": "parse_json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "parse_json": {
+      "main": [
+        [
+          {
+            "node": "validate_calculation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "validate_calculation": {
+      "main": [
+        [
+          {
+            "node": "save_to_database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "save_to_database": {
+      "main": [
+        [
+          {
+            "node": "success_response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
