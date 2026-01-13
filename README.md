@@ -1,15 +1,16 @@
 # Project 2: OCR → JSON
 
-Automated document processing workflow that extracts data from PDF/image files (receipts, invoices, tax documents) and converts them to validated JSON format using OCR and AI.
+Automated document processing workflow that extracts data from PDF/image files (receipts, invoices, tax documents) and converts them to validated JSON format using n8n with OCR and AI capabilities.
 
 ## Features
 
 - **Multi-format Support**: PDF, PNG, JPG, and other common image formats
-- **OCR Processing**: Uses OpenAI Vision API for accurate text extraction
-- **AI-powered Parsing**: GPT-4 extracts structured data from raw OCR text
-- **Validation Engine**: Verifies calculations (subtotal + VAT = grand total)
-- **Database Integration**: Automatically stores extracted data
-- **Error Handling**: Detailed validation messages for failed documents
+- **OCR Processing**: Extracts text accurately from document images
+- **AI-powered Parsing**: Uses AI to extract structured data from raw OCR text
+- **Validation Engine**: Verifies calculations and data consistency (subtotal + VAX = grand total)
+- **Database Integration**: Stores extracted data in configured database
+- **Error Handling**: Detailed validation messages and logging for failed documents
+- **Webhook Support**: Triggered via webhook for real-time document processing
 
 ## Architecture
 
